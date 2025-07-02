@@ -10,27 +10,33 @@ def compute_mean_per_interval(measurement_path, rising_timestamps):
         rising_timestamps (pd.Series): Series of timestamps marking rising edges
 
     Returns:
-        pd.DataFrame: DataFrame with average and standard deviation values per interval,
-                      along with start and end times.
+        pd.DataFrame: A DataFrame containing average and standard deviation values per interval,
+                      as well as interval start and end times.
     """
     # Read the measurement data
     df = pd.read_csv(measurement_path, sep="\t")
 
     results = []
 
-    # Iterate over intervals defined by rising edges
     for i in range(len(rising_timestamps) - 1):
         start = rising_timestamps[i]
         end = rising_timestamps[i + 1]
 
-        # Filter data within the current interval
+        # Extract data within this trigger interval
         interval_data = df[(df["timestamp"] >= start) & (df["timestamp"] < end)]
 
-        # Compute mean and std for each channel
+        # Skip empty intervals (important for clean statistics)
+        if interval_data.empty:
+            continue
+
+        # Compute mean and std across channels
         mean = interval_data[["ch1", "ch2", "ch3", "ch4"]].mean()
         std = interval_data[["ch1", "ch2", "ch3", "ch4"]].std()
 
-        # Combine into one row
+        # Handle any potential NaNs (e.g. std on single-value intervals)
+        std = std.fillna(0)
+
+        # Build result row
         result = {
             "interval_start": start,
             "interval_end": end,

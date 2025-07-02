@@ -75,7 +75,7 @@ def save_variable_synthetic_data(base_path="data"):
     trigger_df.to_csv(os.path.join(base_path, "synthetic_trigger_data.txt"), sep="\t", index=False)
     measurement_df.to_csv(os.path.join(base_path, "synthetic_measurement_data.txt"), sep="\t", index=False)
 
-    print("✔ Variable synthetic data generated and saved to:", base_path)
+    print("Variable synthetic data generated and saved to:", base_path)
 
 if __name__ == "__main__":
     save_variable_synthetic_data()

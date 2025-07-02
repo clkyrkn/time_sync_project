@@ -1,8 +1,7 @@
 from src.process_trigger import find_rising_edges
 from src.process_measurement import compute_mean_per_interval
 from src.sync_signals import check_sync_quality
-from src.visualize import plot_signals
-from src.live_xy_plot import run_live_xy_plot
+from src.visualize import improved_plot_signals
 
 import os
 
@@ -55,11 +54,5 @@ print(f"Results saved to: {output_path}")
 # -------------------------------------------------------------
 # Step 5: Plot the signals for visual confirmation
 # -------------------------------------------------------------
-print("Step 5: Plotting raw signal, trigger, and mean...")
-plot_signals(trigger_path, measurement_path, mean_df, channel="ch1")
-
-# -------------------------------------------------------------
-# Step 6 (Optional): Run live x/y visualization
-# -------------------------------------------------------------
-print("Step 6 (Optional): Running live x/y plot from ch1 and ch2...")
-run_live_xy_plot(measurement_path, x_channel="ch1", y_channel="ch2", update_interval=500)
+print("Step 5: Plotting raw signal, trigger, mean, and std...")
+improved_plot_signals(trigger_path, measurement_path, output_path, channel="ch1", zoom=True)
