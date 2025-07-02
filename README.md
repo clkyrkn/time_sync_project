@@ -16,6 +16,7 @@ This project implements a software-based approach to synchronize a high-speed me
 
 ## Folder Structure
 
+```
 Benedikt/
 ├── main.py
 ├── data/
@@ -32,6 +33,7 @@ Benedikt/
     ├── sync_signals.py
     ├── visualize.py
     └── live_xy_plot.py
+```
 
 ---
 
